@@ -13,6 +13,7 @@ import {
 import { useCart } from '../context/CartContext';
 import { storeService, resolveImageUrl } from '../services/storeService';
 import { SiteSettings, PaymentMethod } from '../types';
+import { PaymentMethodIcon } from '../components/common/PaymentIcons';
 
 interface CheckoutPageProps {
   settings: SiteSettings;
@@ -309,13 +310,16 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ settings, onNavigate
                         type="button"
                         key={method}
                         onClick={() => setPaymentMethod(method)}
-                        className={`p-3 rounded-lg border text-xs font-bold transition-all text-center cursor-pointer ${
+                        className={`p-3 rounded-lg border text-xs font-bold transition-all text-center cursor-pointer flex flex-col items-center justify-center gap-2 ${
                           isSelected
-                            ? 'border-[#111111] bg-[#111111] text-[#D4AF62] shadow-sm'
-                            : 'border-neutral-200 bg-neutral-50 text-neutral-700 hover:bg-neutral-100'
+                            ? 'border-[#D4AF62] bg-[#111111] text-[#D4AF62] shadow-sm'
+                            : 'border-neutral-200 bg-neutral-50 text-neutral-700 hover:bg-neutral-100 hover:border-neutral-300'
                         }`}
                       >
-                        {labels[method]}
+                        <div className="w-10 h-7 bg-white rounded flex items-center justify-center p-0.5 shadow-2xs border border-neutral-200/60">
+                          <PaymentMethodIcon method={method} className="h-4.5 w-auto max-w-[28px]" />
+                        </div>
+                        <span>{labels[method]}</span>
                       </button>
                     );
                   })}

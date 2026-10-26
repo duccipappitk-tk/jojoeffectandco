@@ -14,6 +14,7 @@ import {
 import { SiteSettings } from '../../types';
 import { storeService } from '../../services/storeService';
 import { updateSupabaseConfig, getActiveSupabaseConfig, isSupabaseConfigured } from '../../lib/supabase';
+import { PaymentMethodIcon } from '../../components/common/PaymentIcons';
 
 export const AdminSettingsPage: React.FC = () => {
   const [settings, setSettings] = useState<SiteSettings>(storeService.getSettings());
@@ -162,9 +163,14 @@ export const AdminSettingsPage: React.FC = () => {
           {/* Cash App */}
           <div className="p-4 bg-neutral-50 rounded-lg border border-neutral-200 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#111111]">
-                Cash App Configuration
-              </span>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-white rounded flex items-center justify-center p-0.5 border border-neutral-200 shadow-2xs">
+                  <PaymentMethodIcon method="cashapp" className="h-4 w-4" />
+                </div>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#111111]">
+                  Cash App Configuration
+                </span>
+              </div>
               <label className="flex items-center gap-1.5 text-xs cursor-pointer">
                 <input
                   type="checkbox"
@@ -214,9 +220,14 @@ export const AdminSettingsPage: React.FC = () => {
           {/* Venmo */}
           <div className="p-4 bg-neutral-50 rounded-lg border border-neutral-200 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#111111]">
-                Venmo Configuration
-              </span>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-white rounded flex items-center justify-center p-0.5 border border-neutral-200 shadow-2xs">
+                  <PaymentMethodIcon method="venmo" className="h-4 w-auto" />
+                </div>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#111111]">
+                  Venmo Configuration
+                </span>
+              </div>
               <label className="flex items-center gap-1.5 text-xs cursor-pointer">
                 <input
                   type="checkbox"
@@ -266,9 +277,14 @@ export const AdminSettingsPage: React.FC = () => {
           {/* Zelle */}
           <div className="p-4 bg-neutral-50 rounded-lg border border-neutral-200 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#111111]">
-                Zelle Configuration
-              </span>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-white rounded flex items-center justify-center p-0.5 border border-neutral-200 shadow-2xs">
+                  <PaymentMethodIcon method="zelle" className="h-4 w-auto" />
+                </div>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#111111]">
+                  Zelle Configuration
+                </span>
+              </div>
               <label className="flex items-center gap-1.5 text-xs cursor-pointer">
                 <input
                   type="checkbox"
@@ -318,9 +334,14 @@ export const AdminSettingsPage: React.FC = () => {
           {/* PayPal */}
           <div className="p-4 bg-neutral-50 rounded-lg border border-neutral-200 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#111111]">
-                PayPal Configuration
-              </span>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-white rounded flex items-center justify-center p-0.5 border border-neutral-200 shadow-2xs">
+                  <PaymentMethodIcon method="paypal" className="h-4 w-auto" />
+                </div>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#111111]">
+                  PayPal Configuration
+                </span>
+              </div>
               <label className="flex items-center gap-1.5 text-xs cursor-pointer">
                 <input
                   type="checkbox"

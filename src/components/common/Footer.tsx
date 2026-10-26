@@ -11,8 +11,9 @@ import {
   Lock,
   ArrowRight
 } from 'lucide-react';
-import { SiteSettings } from '../../types';
+import { SiteSettings, PaymentMethod } from '../../types';
 import { storeService } from '../../services/storeService';
+import { PaymentMethodBadge } from './PaymentIcons';
 
 interface FooterProps {
   settings: SiteSettings;
@@ -28,6 +29,12 @@ export const Footer: React.FC<FooterProps> = ({ settings, onNavigate }) => {
   const hasFacebook = Boolean(settings.social_links?.facebook);
   const hasInstagram = Boolean(settings.social_links?.instagram);
   const hasTikTok = Boolean(settings.social_links?.tiktok);
+
+  const paymentMethodsList: PaymentMethod[] = ['cashapp', 'venmo', 'zelle', 'paypal'];
+  const enabledPaymentMethods = paymentMethodsList.filter(method => {
+    if (!settings?.payment_methods) return true;
+    return settings.payment_methods[method]?.enabled !== false;
+  });
 
   return (
     <footer className="bg-[#111111] text-white border-t border-[#222222] pt-16 pb-12">
@@ -242,17 +249,24 @@ export const Footer: React.FC<FooterProps> = ({ settings, onNavigate }) => {
         </div>
 
         {/* Accepted Payment Methods & Copyright */}
-        <div className="pt-12 mt-12 border-t border-[#222222] flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-neutral-500">
-          <div>
+        <div className="pt-12 mt-12 border-t border-[#222222] flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-neutral-500">
+          <div className="text-center md:text-left">
             &copy; {new Date().getFullYear()} JO JO EFFECTS &amp; CO. All rights reserved.
           </div>
 
-          <div className="flex items-center gap-3">
-            <span className="text-[11px] text-neutral-400">Supported USD Payments:</span>
-            <span className="px-2 py-1 bg-[#1e1e1e] border border-[#333333] text-neutral-300 rounded text-[11px] font-medium">Cash App</span>
-            <span className="px-2 py-1 bg-[#1e1e1e] border border-[#333333] text-neutral-300 rounded text-[11px] font-medium">Venmo</span>
-            <span className="px-2 py-1 bg-[#1e1e1e] border border-[#333333] text-neutral-300 rounded text-[11px] font-medium">Zelle</span>
-            <span className="px-2 py-1 bg-[#1e1e1e] border border-[#333333] text-neutral-300 rounded text-[11px] font-medium">PayPal</span>
+          {/* Supported USD Payments Section */}
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <span className="text-[11px] font-medium text-neutral-400 tracking-wide whitespace-nowrap">
+              Supported USD Payments:
+            </span>
+            <div
+              className="flex items-center gap-2 sm:gap-2.5 flex-wrap justify-center"
+              aria-label="Supported USD Payment Methods"
+            >
+              {enabledPaymentMethods.map(method => (
+                <PaymentMethodBadge key={method} method={method} />
+              ))}
+            </div>
           </div>
         </div>
 
