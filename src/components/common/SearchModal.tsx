@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, X, ArrowRight } from 'lucide-react';
 import { Product, Category } from '../../types';
+import { resolveImageUrl } from '../../services/storeService';
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -128,8 +129,11 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                   <div className="w-14 h-14 bg-neutral-100 rounded-md overflow-hidden shrink-0 border border-neutral-200">
                     {img ? (
                       <img
-                        src={img}
+                        src={resolveImageUrl(img)}
                         alt={product.name}
+                        onError={(e) => {
+                          e.currentTarget.src = '/images/hero_luxe_collection.jpg';
+                        }}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                       />
                     ) : (

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ShoppingBag, Eye, Check } from 'lucide-react';
 import { Product } from '../../types';
 import { useCart } from '../../context/CartContext';
+import { resolveImageUrl } from '../../services/storeService';
 
 interface ProductCardProps {
   product: Product;
@@ -18,7 +19,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const [isAdded, setIsAdded] = useState(false);
   const [imgError, setImgError] = useState(false);
 
-  const primaryImage = product.images.find(i => i.is_primary)?.url || product.images[0]?.url || '';
+  const rawImage = product.images.find(i => i.is_primary)?.url || product.images[0]?.url || '';
+  const primaryImage = resolveImageUrl(rawImage);
   const price = product.sale_price !== null && product.sale_price !== undefined ? product.sale_price : product.base_price;
   const hasDiscount = product.sale_price !== null && product.sale_price !== undefined && product.sale_price < product.base_price;
   const isOutOfStock = product.stock_quantity <= 0;
@@ -42,7 +44,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <img
             src={primaryImage}
             alt={product.name}
-            onError={() => setImgError(true)}
+            onError={(e) => {
+              if (primaryImage !== '/images/hero_luxe_collection.jpg') {
+                e.currentTarget.src = '/images/hero_luxe_collection.jpg';
+              } else {
+                setImgError(true);
+              }
+            }}
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
             loading="lazy"

@@ -10,7 +10,7 @@ import {
   ExternalLink 
 } from 'lucide-react';
 import { Category } from '../../types';
-import { storeService } from '../../services/storeService';
+import { storeService, resolveImageUrl } from '../../services/storeService';
 
 interface AdminCategoriesPageProps {
   onNavigatePublic: (route: string) => void;
@@ -42,7 +42,7 @@ export const AdminCategoriesPage: React.FC<AdminCategoriesPageProps> = ({ onNavi
     setName('');
     setSlug('');
     setDescription('');
-    setImageUrl('/src/assets/images/hero_luxe_collection_1793019935404.jpg');
+    setImageUrl('/images/hero_luxe_collection.jpg');
     setIsModalOpen(true);
   };
 
@@ -51,7 +51,7 @@ export const AdminCategoriesPage: React.FC<AdminCategoriesPageProps> = ({ onNavi
     setName(cat.name);
     setSlug(cat.slug);
     setDescription(cat.description);
-    setImageUrl(cat.image_url);
+    setImageUrl(resolveImageUrl(cat.image_url));
     setIsModalOpen(true);
   };
 
@@ -82,7 +82,7 @@ export const AdminCategoriesPage: React.FC<AdminCategoriesPageProps> = ({ onNavi
       name: name.trim(),
       slug: slug.trim(),
       description: description.trim(),
-      image_url: imageUrl || '/src/assets/images/hero_luxe_collection_1793019935404.jpg',
+      image_url: imageUrl || '/images/hero_luxe_collection.jpg',
       is_active: true,
       display_order: editingCategory ? editingCategory.display_order : categories.length + 1,
     };
@@ -132,8 +132,11 @@ export const AdminCategoriesPage: React.FC<AdminCategoriesPageProps> = ({ onNavi
             <div>
               <div className="relative aspect-[4/3] bg-neutral-100">
                 <img
-                  src={cat.image_url}
+                  src={resolveImageUrl(cat.image_url)}
                   alt={cat.name}
+                  onError={(e) => {
+                    e.currentTarget.src = '/images/hero_luxe_collection.jpg';
+                  }}
                   className="w-full h-full object-cover"
                 />
                 <span className="absolute top-2 left-2 px-2 py-0.5 bg-[#111111] text-[#D4AF62] text-[10px] font-bold rounded">
@@ -240,7 +243,14 @@ export const AdminCategoriesPage: React.FC<AdminCategoriesPageProps> = ({ onNavi
                 </label>
                 <div className="flex items-center gap-3">
                   <div className="w-16 h-12 bg-neutral-100 rounded border border-neutral-200 overflow-hidden shrink-0">
-                    <img src={imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                    <img 
+                      src={resolveImageUrl(imageUrl)} 
+                      alt="Preview" 
+                      onError={(e) => {
+                        e.currentTarget.src = '/images/hero_luxe_collection.jpg';
+                      }}
+                      className="w-full h-full object-cover" 
+                    />
                   </div>
                   <button
                     type="button"

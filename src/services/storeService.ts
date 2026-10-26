@@ -18,6 +18,41 @@ const STORAGE_KEYS = {
   SETTINGS: 'jojo_settings_v1',
 };
 
+/**
+ * Normalizes any image URL so it resolves correctly in production on Vercel
+ * without 404ing on Vite source paths.
+ */
+export function resolveImageUrl(url?: string | null): string {
+  if (!url || typeof url !== 'string' || !url.trim()) {
+    return '/images/hero_luxe_collection.jpg';
+  }
+  const trimmed = url.trim();
+  // Remote URLs or data URLs
+  if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('data:')) {
+    return trimmed;
+  }
+  // Convert old Vite source paths to public distribution paths
+  if (trimmed.startsWith('/src/assets/images/')) {
+    const filename = trimmed.replace('/src/assets/images/', '');
+    return `/images/${filename}`;
+  }
+  if (trimmed.startsWith('src/assets/images/')) {
+    const filename = trimmed.replace('src/assets/images/', '');
+    return `/images/${filename}`;
+  }
+  if (trimmed.startsWith('/assets/images/')) {
+    const filename = trimmed.replace('/assets/images/', '');
+    return `/images/${filename}`;
+  }
+  if (trimmed.startsWith('images/')) {
+    return `/${trimmed}`;
+  }
+  if (!trimmed.startsWith('/')) {
+    return `/${trimmed}`;
+  }
+  return trimmed;
+}
+
 // Initial default categories
 export const INITIAL_CATEGORIES: Category[] = [
   {
@@ -25,7 +60,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: "Women's Hair",
     slug: 'womens-hair',
     description: 'Silky virgin hair bundles, HD lace wigs, extensions, and salon-grade styling pieces.',
-    image_url: '/src/assets/images/cat_womens_hair_1793019936017.jpg',
+    image_url: '/images/cat_womens_hair.jpg',
     is_active: true,
     display_order: 1,
   },
@@ -34,7 +69,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: "Women's Fashion Handbags",
     slug: 'womens-fashion-handbags',
     description: 'Chic structured top-handle bags, crossbody styles, and statement luxury shoulder purses.',
-    image_url: '/src/assets/images/cat_fashion_handbag_1793019937559.jpg',
+    image_url: '/images/cat_fashion_handbag.jpg',
     is_active: true,
     display_order: 2,
   },
@@ -43,7 +78,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: 'Phone Accessories',
     slug: 'phone-accessories',
     description: 'Impact protection cases, fast magnetic wireless pads, and braided charging accessories.',
-    image_url: '/src/assets/images/cat_phone_accessory_1793019937687.jpg',
+    image_url: '/images/cat_phone_accessory.jpg',
     is_active: true,
     display_order: 3,
   },
@@ -52,7 +87,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: 'Watches',
     slug: 'watches',
     description: 'Precision quartz timepieces with polished gold bezels and stainless steel link bracelets.',
-    image_url: '/src/assets/images/cat_luxury_watch_1793019939029.jpg',
+    image_url: '/images/cat_luxury_watch.jpg',
     is_active: true,
     display_order: 4,
   },
@@ -82,7 +117,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     images: [
       {
         id: 'img-h1',
-        url: '/src/assets/images/cat_womens_hair_1793019936017.jpg',
+        url: '/images/cat_womens_hair.jpg',
         alt_text: 'Raw Virgin Straight Lace Front Wig',
         is_primary: true,
         display_order: 1
@@ -117,7 +152,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     images: [
       {
         id: 'img-h2',
-        url: '/src/assets/images/cat_womens_hair_1793019936017.jpg',
+        url: '/images/cat_womens_hair.jpg',
         alt_text: 'Brazilian Body Wave Bundles',
         is_primary: true,
         display_order: 1
@@ -151,7 +186,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     images: [
       {
         id: 'img-b1',
-        url: '/src/assets/images/cat_fashion_handbag_1793019937559.jpg',
+        url: '/images/cat_fashion_handbag.jpg',
         alt_text: 'Luxe Structured Top-Handle Flap Handbag',
         is_primary: true,
         display_order: 1
@@ -184,7 +219,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     images: [
       {
         id: 'img-b2',
-        url: '/src/assets/images/hero_luxe_collection_1793019935404.jpg',
+        url: '/images/hero_luxe_collection.jpg',
         alt_text: 'Everyday Parisian Saddle Crossbody Bag',
         is_primary: true,
         display_order: 1
@@ -216,7 +251,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     images: [
       {
         id: 'img-w1',
-        url: '/src/assets/images/cat_luxury_watch_1793019939029.jpg',
+        url: '/images/cat_luxury_watch.jpg',
         alt_text: 'Aurora Fluted Bezel Two-Tone Quartz Timepiece',
         is_primary: true,
         display_order: 1
@@ -249,7 +284,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     images: [
       {
         id: 'img-w2',
-        url: '/src/assets/images/cat_luxury_watch_1793019939029.jpg',
+        url: '/images/cat_luxury_watch.jpg',
         alt_text: 'Heritage Minimalist Slim Mesh Watch',
         is_primary: true,
         display_order: 1
@@ -280,7 +315,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     images: [
       {
         id: 'img-a1',
-        url: '/src/assets/images/cat_phone_accessory_1793019937687.jpg',
+        url: '/images/cat_phone_accessory.jpg',
         alt_text: 'Slim Matte Magnetic Case and Fast Wireless Pad',
         is_primary: true,
         display_order: 1
@@ -313,7 +348,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     images: [
       {
         id: 'img-a2',
-        url: '/src/assets/images/cat_phone_accessory_1793019937687.jpg',
+        url: '/images/cat_phone_accessory.jpg',
         alt_text: 'Braided Heavy-Duty 60W USB-C Cable',
         is_primary: true,
         display_order: 1
@@ -346,7 +381,7 @@ export const INITIAL_SETTINGS: SiteSettings = {
     primary_button_link: '/shop',
     secondary_button_text: 'EXPLORE COLLECTIONS',
     secondary_button_link: '#collections',
-    image_url: '/src/assets/images/hero_luxe_collection_1793019935404.jpg',
+    image_url: '/images/hero_luxe_collection.jpg',
   },
   about_us: {
     heading: 'Curated Finds. Direct Quality. Everyday Style.',
@@ -402,6 +437,9 @@ export const storeService = {
       const data = localStorage.getItem(STORAGE_KEYS.SETTINGS);
       if (data) {
         const parsed = JSON.parse(data);
+        if (parsed.hero_section?.image_url) {
+          parsed.hero_section.image_url = resolveImageUrl(parsed.hero_section.image_url);
+        }
         // Ensure official Instagram URL is present if unset or placeholder
         if (!parsed.social_links?.instagram || parsed.social_links.instagram.includes('jojoeffects')) {
           parsed.social_links = {
@@ -434,6 +472,13 @@ export const storeService = {
 
   // CATEGORIES
   async getCategories(): Promise<Category[]> {
+    const sanitizeCategories = (cats: Category[]): Category[] => {
+      return cats.map(c => ({
+        ...c,
+        image_url: resolveImageUrl(c.image_url),
+      }));
+    };
+
     if (isSupabaseConfigured && supabase) {
       try {
         const { data, error } = await supabase
@@ -441,13 +486,14 @@ export const storeService = {
           .select('*')
           .order('display_order', { ascending: true });
         if (!error && data && data.length > 0) {
-          return data as Category[];
+          return sanitizeCategories(data as Category[]);
         }
         // If table exists but empty, auto-seed initial categories into Supabase
         if (!error && (!data || data.length === 0)) {
           for (const cat of INITIAL_CATEGORIES) {
             await supabase.from('categories').upsert(cat);
           }
+          return INITIAL_CATEGORIES;
         }
       } catch (err) {
         console.warn('Supabase getCategories error:', err);
@@ -456,7 +502,12 @@ export const storeService = {
     try {
       const stored = localStorage.getItem(STORAGE_KEYS.CATEGORIES);
       if (stored) {
-        return JSON.parse(stored);
+        const parsed = JSON.parse(stored) as Category[];
+        const sanitized = sanitizeCategories(parsed);
+        if (JSON.stringify(sanitized) !== stored) {
+          localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(sanitized));
+        }
+        return sanitized;
       }
     } catch (e) {
       console.warn('Storage read error', e);
@@ -503,6 +554,15 @@ export const storeService = {
 
   // PRODUCTS
   async getProducts(): Promise<Product[]> {
+    const sanitizeProducts = (prods: Product[]): Product[] => {
+      return prods.map(p => ({
+        ...p,
+        images: (p.images && p.images.length > 0)
+          ? p.images.map(img => ({ ...img, url: resolveImageUrl(img.url) }))
+          : [{ id: `img-default-${p.id}`, url: '/images/hero_luxe_collection.jpg', is_primary: true, display_order: 1 }]
+      }));
+    };
+
     if (isSupabaseConfigured && supabase) {
       try {
         const { data, error } = await supabase
@@ -510,13 +570,14 @@ export const storeService = {
           .select('*')
           .order('created_at', { ascending: false });
         if (!error && data && data.length > 0) {
-          return data as Product[];
+          return sanitizeProducts(data as Product[]);
         }
         // If table exists but empty, auto-seed initial products into Supabase
         if (!error && (!data || data.length === 0)) {
           for (const prod of INITIAL_PRODUCTS) {
             await supabase.from('products').upsert(prod);
           }
+          return INITIAL_PRODUCTS;
         }
       } catch (err) {
         console.warn('Supabase getProducts error:', err);
@@ -525,7 +586,12 @@ export const storeService = {
     try {
       const stored = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
       if (stored) {
-        return JSON.parse(stored);
+        const parsed = JSON.parse(stored) as Product[];
+        const sanitized = sanitizeProducts(parsed);
+        if (JSON.stringify(sanitized) !== stored) {
+          localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(sanitized));
+        }
+        return sanitized;
       }
     } catch (e) {
       console.warn('Storage read error', e);

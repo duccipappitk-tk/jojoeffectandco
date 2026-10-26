@@ -70,8 +70,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({ settings, onNavigate }) =>
           <div className="lg:col-span-6">
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-[#E5E7EB] shadow-xl">
               <img
-                src="/src/assets/images/hero_luxe_collection_1793019935404.jpg"
+                src="/images/hero_luxe_collection.jpg"
                 alt="JO JO EFFECTS & CO. Curated Collection"
+                onError={(e) => {
+                  e.currentTarget.src = '/images/hero_luxe_collection.jpg';
+                }}
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />

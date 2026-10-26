@@ -278,14 +278,20 @@ CREATE POLICY "Authenticated Upload Product Images" ON storage.objects
 -- Seed Categories
 INSERT INTO public.categories (id, name, slug, description, image_url, is_active, display_order)
 VALUES
-  ('cat-womens-hair', 'Women''s Hair', 'womens-hair', 'Silky virgin hair bundles, HD lace wigs, extensions, and salon-grade styling pieces.', '/src/assets/images/cat_womens_hair_1793019936017.jpg', true, 1),
-  ('cat-fashion-handbags', 'Women''s Fashion Handbags', 'womens-fashion-handbags', 'Chic structured top-handle bags, crossbody styles, and statement luxury shoulder purses.', '/src/assets/images/cat_fashion_handbag_1793019937559.jpg', true, 2),
-  ('cat-phone-accessories', 'Phone Accessories', 'phone-accessories', 'Impact protection cases, fast magnetic wireless pads, and braided charging accessories.', '/src/assets/images/cat_phone_accessory_1793019937687.jpg', true, 3),
-  ('cat-watches', 'Watches', 'watches', 'Precision quartz timepieces with polished gold bezels and stainless steel link bracelets.', '/src/assets/images/cat_luxury_watch_1793019939029.jpg', true, 4)
+  ('cat-womens-hair', 'Women''s Hair', 'womens-hair', 'Silky virgin hair bundles, HD lace wigs, extensions, and salon-grade styling pieces.', '/images/cat_womens_hair.jpg', true, 1),
+  ('cat-fashion-handbags', 'Women''s Fashion Handbags', 'womens-fashion-handbags', 'Chic structured top-handle bags, crossbody styles, and statement luxury shoulder purses.', '/images/cat_fashion_handbag.jpg', true, 2),
+  ('cat-phone-accessories', 'Phone Accessories', 'phone-accessories', 'Impact protection cases, fast magnetic wireless pads, and braided charging accessories.', '/images/cat_phone_accessory.jpg', true, 3),
+  ('cat-watches', 'Watches', 'watches', 'Precision quartz timepieces with polished gold bezels and stainless steel link bracelets.', '/images/cat_luxury_watch.jpg', true, 4)
 ON CONFLICT (id) DO UPDATE SET
   name = EXCLUDED.name,
   slug = EXCLUDED.slug,
-  description = EXCLUDED.description;
+  description = EXCLUDED.description,
+  image_url = EXCLUDED.image_url;
+
+-- Fix any existing legacy records that contain /src/assets/images/
+UPDATE public.categories 
+SET image_url = REPLACE(image_url, '/src/assets/images/', '/images/') 
+WHERE image_url LIKE '/src/assets/images/%';
 
 -- Seed Products
 INSERT INTO public.products (id, category_id, name, slug, description, specifications, base_price, sale_price, stock_quantity, is_published, is_featured, is_new_arrival, images, variants)
@@ -303,7 +309,7 @@ VALUES
     true,
     true,
     true,
-    '[{"id": "img-h1", "url": "/src/assets/images/cat_womens_hair_1793019936017.jpg", "alt_text": "Raw Virgin Straight Lace Front Wig", "is_primary": true, "display_order": 1}]'::jsonb,
+    '[{"id": "img-h1", "url": "/images/cat_womens_hair.jpg", "alt_text": "Raw Virgin Straight Lace Front Wig", "is_primary": true, "display_order": 1}]'::jsonb,
     '[{"id": "v-h1", "name": "22 Inches", "price_adjustment": 0, "stock_quantity": 4}, {"id": "v-h2", "name": "26 Inches", "price_adjustment": 25, "stock_quantity": 5}, {"id": "v-h3", "name": "30 Inches", "price_adjustment": 45, "stock_quantity": 3}]'::jsonb
   ),
   (
@@ -319,7 +325,7 @@ VALUES
     true,
     false,
     true,
-    '[{"id": "img-h2", "url": "/src/assets/images/cat_womens_hair_1793019936017.jpg", "alt_text": "Brazilian Body Wave Bundles", "is_primary": true, "display_order": 1}]'::jsonb,
+    '[{"id": "img-h2", "url": "/images/cat_womens_hair.jpg", "alt_text": "Brazilian Body Wave Bundles", "is_primary": true, "display_order": 1}]'::jsonb,
     '[{"id": "v-h4", "name": "18 / 20 / 22 Inches", "price_adjustment": 0, "stock_quantity": 8}, {"id": "v-h5", "name": "22 / 24 / 26 Inches", "price_adjustment": 20, "stock_quantity": 10}]'::jsonb
   ),
   (
@@ -335,7 +341,7 @@ VALUES
     true,
     true,
     true,
-    '[{"id": "img-b1", "url": "/src/assets/images/cat_fashion_handbag_1793019937559.jpg", "alt_text": "Luxe Structured Top-Handle Flap Handbag", "is_primary": true, "display_order": 1}]'::jsonb,
+    '[{"id": "img-b1", "url": "/images/cat_fashion_handbag.jpg", "alt_text": "Luxe Structured Top-Handle Flap Handbag", "is_primary": true, "display_order": 1}]'::jsonb,
     '[{"id": "v-b1", "name": "Caramel Tan & Black", "price_adjustment": 0, "stock_quantity": 8}, {"id": "v-b2", "name": "Classic All-Black", "price_adjustment": 0, "stock_quantity": 6}]'::jsonb
   ),
   (
@@ -351,7 +357,7 @@ VALUES
     true,
     true,
     true,
-    '[{"id": "img-w1", "url": "/src/assets/images/cat_luxury_watch_1793019939029.jpg", "alt_text": "Aurora Fluted Bezel Two-Tone Quartz Timepiece", "is_primary": true, "display_order": 1}]'::jsonb,
+    '[{"id": "img-w1", "url": "/images/cat_luxury_watch.jpg", "alt_text": "Aurora Fluted Bezel Two-Tone Quartz Timepiece", "is_primary": true, "display_order": 1}]'::jsonb,
     '[{"id": "v-w1", "name": "Two-Tone Gold & Silver", "price_adjustment": 0, "stock_quantity": 10}, {"id": "v-w2", "name": "Pure Gold Plated", "price_adjustment": 10, "stock_quantity": 5}]'::jsonb
   ),
   (
@@ -367,14 +373,15 @@ VALUES
     true,
     true,
     true,
-    '[{"id": "img-a1", "url": "/src/assets/images/cat_phone_accessory_1793019937687.jpg", "alt_text": "Slim Matte Magnetic Case and Fast Wireless Pad", "is_primary": true, "display_order": 1}]'::jsonb,
+    '[{"id": "img-a1", "url": "/images/cat_phone_accessory.jpg", "alt_text": "Slim Matte Magnetic Case and Fast Wireless Pad", "is_primary": true, "display_order": 1}]'::jsonb,
     '[{"id": "v-a1", "name": "iPhone 15 / 16 Series", "price_adjustment": 0, "stock_quantity": 20}, {"id": "v-a2", "name": "Samsung Galaxy S24 Series", "price_adjustment": 0, "stock_quantity": 15}]'::jsonb
   )
 ON CONFLICT (id) DO UPDATE SET
   name = EXCLUDED.name,
   base_price = EXCLUDED.base_price,
   sale_price = EXCLUDED.sale_price,
-  stock_quantity = EXCLUDED.stock_quantity;
+  stock_quantity = EXCLUDED.stock_quantity,
+  images = EXCLUDED.images;
 
 -- Seed Official Business Settings
 INSERT INTO public.site_settings (id, data, updated_at)
@@ -401,7 +408,7 @@ VALUES (
       "primary_button_link": "/shop",
       "secondary_button_text": "EXPLORE COLLECTIONS",
       "secondary_button_link": "#collections",
-      "image_url": "/src/assets/images/hero_luxe_collection_1793019935404.jpg"
+      "image_url": "/images/hero_luxe_collection.jpg"
     },
     "about_us": {
       "heading": "Curated Finds. Direct Quality. Everyday Style.",

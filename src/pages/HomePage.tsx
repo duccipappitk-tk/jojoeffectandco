@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { Product, Category, SiteSettings } from '../types';
 import { ProductCard } from '../components/common/ProductCard';
-import { storeService } from '../services/storeService';
+import { storeService, resolveImageUrl } from '../services/storeService';
 
 interface HomePageProps {
   categories: Category[];
@@ -107,8 +107,11 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="lg:col-span-6 relative">
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-white shadow-xl border border-[#E5E7EB] group">
                   <img
-                    src={hero.image_url || '/src/assets/images/hero_luxe_collection_1793019935404.jpg'}
+                    src={resolveImageUrl(hero.image_url)}
                     alt="JO JO EFFECTS & CO. Curated Collection"
+                    onError={(e) => {
+                      e.currentTarget.src = '/images/hero_luxe_collection.jpg';
+                    }}
                     className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-102"
                     referrerPolicy="no-referrer"
                   />
@@ -161,8 +164,17 @@ export const HomePage: React.FC<HomePageProps> = ({
               >
                 <div className="relative aspect-[4/3] bg-neutral-100 overflow-hidden">
                   <img
-                    src={category.image_url}
+                    src={resolveImageUrl(category.image_url)}
                     alt={category.name}
+                    onError={(e) => {
+                      const fallbackMap: Record<string, string> = {
+                        'womens-hair': '/images/cat_womens_hair.jpg',
+                        'womens-fashion-handbags': '/images/cat_fashion_handbag.jpg',
+                        'phone-accessories': '/images/cat_phone_accessory.jpg',
+                        'watches': '/images/cat_luxury_watch.jpg',
+                      };
+                      e.currentTarget.src = fallbackMap[category.slug] || '/images/hero_luxe_collection.jpg';
+                    }}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     referrerPolicy="no-referrer"
                     loading="lazy"

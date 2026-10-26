@@ -12,7 +12,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { Product, Category } from '../../types';
-import { storeService } from '../../services/storeService';
+import { storeService, resolveImageUrl } from '../../services/storeService';
 
 interface AdminProductsPageProps {
   onNavigateAdmin: (route: string) => void;
@@ -166,7 +166,14 @@ export const AdminProductsPage: React.FC<AdminProductsPageProps> = ({
                         <div className="flex items-center gap-3">
                           <div className="w-12 h-12 bg-neutral-100 rounded-md overflow-hidden shrink-0 border border-neutral-200">
                             {img ? (
-                              <img src={img} alt={product.name} className="w-full h-full object-cover" />
+                              <img 
+                                src={resolveImageUrl(img)} 
+                                alt={product.name} 
+                                onError={(e) => {
+                                  e.currentTarget.src = '/images/hero_luxe_collection.jpg';
+                                }}
+                                className="w-full h-full object-cover" 
+                              />
                             ) : (
                               <div className="w-full h-full flex items-center justify-center text-[10px] text-neutral-400">JJE</div>
                             )}

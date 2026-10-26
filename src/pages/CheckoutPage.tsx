@@ -11,7 +11,7 @@ import {
   Check
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { storeService } from '../services/storeService';
+import { storeService, resolveImageUrl } from '../services/storeService';
 import { SiteSettings, PaymentMethod } from '../types';
 
 interface CheckoutPageProps {
@@ -385,7 +385,14 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ settings, onNavigate
                     <div key={item.id} className="py-3 flex items-center gap-3">
                       <div className="w-14 h-14 bg-neutral-100 rounded-md overflow-hidden shrink-0 border border-neutral-200">
                         {img ? (
-                          <img src={img} alt={item.product.name} className="w-full h-full object-cover" />
+                          <img 
+                            src={resolveImageUrl(img)} 
+                            alt={item.product.name} 
+                            onError={(e) => {
+                              e.currentTarget.src = '/images/hero_luxe_collection.jpg';
+                            }}
+                            className="w-full h-full object-cover" 
+                          />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-xs text-neutral-400">JJE</div>
                         )}

@@ -11,7 +11,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { Product, Category, ProductImage, ProductVariant } from '../../types';
-import { storeService } from '../../services/storeService';
+import { storeService, resolveImageUrl } from '../../services/storeService';
 
 interface AdminProductFormPageProps {
   productId?: string;
@@ -203,7 +203,7 @@ export const AdminProductFormPage: React.FC<AdminProductFormPageProps> = ({
         images: images.length > 0 ? images : [
           {
             id: 'fallback-img',
-            url: '/src/assets/images/hero_luxe_collection_1793019935404.jpg',
+            url: '/images/hero_luxe_collection.jpg',
             is_primary: true,
             display_order: 1,
             alt_text: name,
@@ -439,8 +439,11 @@ export const AdminProductFormPage: React.FC<AdminProductFormPageProps> = ({
                 }`}
               >
                 <img
-                  src={img.url}
+                  src={resolveImageUrl(img.url)}
                   alt="Product view"
+                  onError={(e) => {
+                    e.currentTarget.src = '/images/hero_luxe_collection.jpg';
+                  }}
                   className="w-full h-full object-cover"
                 />
                 

@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { Product, Category, ProductVariant } from '../types';
 import { useCart } from '../context/CartContext';
-import { storeService } from '../services/storeService';
+import { storeService, resolveImageUrl } from '../services/storeService';
 import { ProductCard } from '../components/common/ProductCard';
 
 interface ProductDetailPageProps {
@@ -70,7 +70,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
   const images = product.images.length > 0 
     ? product.images 
-    : [{ id: 'default', url: '/src/assets/images/hero_luxe_collection_1793019935404.jpg', is_primary: true, display_order: 1 }];
+    : [{ id: 'default', url: '/images/hero_luxe_collection.jpg', is_primary: true, display_order: 1 }];
 
   const activeImage = images[selectedImageIndex]?.url || images[0]?.url;
 
@@ -148,8 +148,11 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     }`}
                   >
                     <img
-                      src={img.url}
+                      src={resolveImageUrl(img.url)}
                       alt={img.alt_text || product.name}
+                      onError={(e) => {
+                        e.currentTarget.src = '/images/hero_luxe_collection.jpg';
+                      }}
                       className="w-full h-full object-cover"
                     />
                   </button>
@@ -160,8 +163,11 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
             {/* Active Main Image Display */}
             <div className="flex-1 relative aspect-[4/3] bg-neutral-100 rounded-xl overflow-hidden border border-[#E5E7EB]">
               <img
-                src={activeImage}
+                src={resolveImageUrl(activeImage)}
                 alt={product.name}
+                onError={(e) => {
+                  e.currentTarget.src = '/images/hero_luxe_collection.jpg';
+                }}
                 className="w-full h-full object-cover object-center"
                 referrerPolicy="no-referrer"
               />

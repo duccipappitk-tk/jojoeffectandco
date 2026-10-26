@@ -8,7 +8,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { SiteSettings } from '../../types';
-import { storeService } from '../../services/storeService';
+import { storeService, resolveImageUrl } from '../../services/storeService';
 
 export const AdminContentPage: React.FC = () => {
   const [settings, setSettings] = useState<SiteSettings>(storeService.getSettings());
@@ -252,8 +252,11 @@ export const AdminContentPage: React.FC = () => {
               <div className="flex items-center gap-4">
                 <div className="w-32 h-24 bg-neutral-100 rounded-lg overflow-hidden border border-neutral-200 shrink-0">
                   <img
-                    src={settings.hero_section?.image_url}
+                    src={resolveImageUrl(settings.hero_section?.image_url)}
                     alt="Hero preview"
+                    onError={(e) => {
+                      e.currentTarget.src = '/images/hero_luxe_collection.jpg';
+                    }}
                     className="w-full h-full object-cover"
                   />
                 </div>
