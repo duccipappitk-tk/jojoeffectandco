@@ -1,0 +1,1550 @@
+# MASTER WEBSITE BUILD PROMPT
+# JO JO EFFECTS & CO.
+## Professional E-Commerce Website with WhatsApp Ordering, Supabase Backend & Admin Dashboard
+
+---
+
+## 1. PROJECT OVERVIEW
+
+Act as a multidisciplinary senior development team comprising:
+
+- Senior UI/UX Designer
+- Senior Frontend Developer
+- Backend Developer
+- Database Architect
+- E-Commerce Product Designer
+- Security Engineer
+- DevOps Engineer
+- Quality Assurance Engineer
+- Conversion Rate Optimization Specialist
+
+Your task is to design, develop, and implement a complete, professional, functional, responsive e-commerce website for **JO JO EFFECTS & CO.**
+
+This is a real business transitioning from Facebook-based product marketing to a structured online shopping platform.
+
+The website must be designed for the business's current operations while supporting future growth.
+
+The owner currently sources products from China and other international locations for resale.
+
+The business primarily uses Facebook to showcase products and communicate with customers.
+
+The new website should establish a professional online presence where customers can:
+
+- Browse products.
+- View product images.
+- Read product descriptions.
+- Check prices.
+- Explore product categories.
+- Submit product inquiries.
+- Place orders.
+- Add products to a shopping cart.
+- Contact the business through WhatsApp.
+- Follow the business on social media.
+- Receive order confirmations.
+- Access delivery information.
+
+The administrator must be able to manage products, upload product images, edit company information, manage orders, update inventory, record inquiries, and maintain website content through a secure dashboard.
+
+The website will be developed using Google AI Studio, connected to Supabase, maintained through GitHub, and deployed through Vercel.
+
+### Primary objective
+
+Create a professional, clean, modern, mobile-friendly online store that improves the business's credibility, simplifies customer ordering, and reduces the owner's dependence on Facebook-only selling.
+
+Do not create a static mockup.
+
+Build the actual application with functional frontend components, backend integration, database operations, authentication, and working routes.
+
+---
+
+# 2. OFFICIAL BUSINESS INFORMATION
+
+Use the following confirmed information.
+
+**Business Name:** JO JO EFFECTS & CO.
+
+**Business Location:** Sioux Falls, South Dakota, United States.
+
+**Official Business Contact Number:** +1 (605) 900-8992
+
+**Official WhatsApp Number:** +1 (443) 743-5959
+
+**Official Currency:** USD — United States Dollar
+
+**Currency Symbol:** $
+
+**Current Product Categories:**
+
+1. Women's Hair
+2. Women's Fashion Handbags
+3. Phone Accessories
+4. Watches
+
+**Social Media Platforms:**
+
+- Facebook
+- Instagram
+- TikTok
+
+**Development Platform:** Google AI Studio
+
+**Database and Backend:** Supabase
+
+**Source Control:** GitHub
+
+**Deployment:** Vercel
+
+### Critical contact information requirements
+
+The official business contact number is:
+
++1 (605) 900-8992
+
+Display this number on the Contact Us page and in appropriate business contact sections.
+
+The official WhatsApp number is:
+
++1 (443) 743-5959
+
+Use this number exclusively for WhatsApp integration.
+
+**IMPORTANT: Do not display the WhatsApp number anywhere as visible website text.**
+
+Do not display it in:
+
+- Website header.
+- Contact page.
+- Footer.
+- Product pages.
+- Order confirmation pages.
+- Administrative dashboard.
+- Website content.
+- Social media sections.
+
+The WhatsApp number may only be used internally to construct functional WhatsApp links.
+
+Use the international WhatsApp URL format:
+
+https://wa.me/14437435959
+
+Do not include spaces, brackets, or hyphens in the WhatsApp URL.
+
+The WhatsApp number must remain editable through the administrator settings.
+
+Do not confuse the official business contact number with the WhatsApp number.
+
+Do not invent an email address, physical street address, business hours, social media URLs, or payment account details.
+
+---
+
+# 3. BUSINESS POSITIONING
+
+Position JO JO EFFECTS & CO. as a professional online shopping destination offering carefully selected everyday products.
+
+The website should communicate:
+
+- Quality-conscious product selection.
+- Convenient shopping.
+- Professional customer service.
+- Clear product information.
+- Reliable communication.
+- Good value.
+- A modern retail experience.
+
+The website should feel like a growing online retail business, not a personal Facebook page.
+
+However, do not make the design overly corporate or complicated.
+
+The brand should feel approachable, trustworthy, premium, and easy to shop.
+
+### Brand positioning statement
+
+"Your Everyday Finds, Made Easy."
+
+Use this as a suggested brand message.
+
+The administrator must be able to edit the headline and supporting text.
+
+Do not make unsupported claims about product authenticity, warranties, delivery guarantees, or certifications.
+
+---
+
+# 4. DESIGN DIRECTION
+
+Create a clean, premium, minimalistic e-commerce website.
+
+The website must have a **dominant white background**.
+
+Use black and gold as complementary colours.
+
+The design should be:
+
+- Modern.
+- Clean.
+- Premium.
+- Simple.
+- Professional.
+- Product-focused.
+- Responsive.
+- Easy to navigate.
+- Visually engaging without excessive decoration.
+
+The website must NOT look:
+
+- Artistic.
+- Overly decorative.
+- Cartoonish.
+- Cluttered.
+- Experimental.
+- Complicated.
+- Excessively animated.
+
+Do not use unnecessary gradients.
+
+Do not use excessive shadows.
+
+Do not use oversized decorative typography.
+
+Do not create unnecessary visual elements that distract from products.
+
+Prioritize the products and the shopping experience.
+
+---
+
+# 5. COLOUR SYSTEM
+
+Use the following colour palette.
+
+| Colour | Hex |
+|---|---|
+| Primary white | #FFFFFF |
+| Primary black | #111111 |
+| Gold accent | #D4AF62 |
+| Light grey | #F5F5F5 |
+| Border grey | #E5E7EB |
+| Secondary text | #666666 |
+
+### Colour application
+
+White should dominate the entire website.
+
+Use black for:
+
+- Main headings.
+- Navigation.
+- Body text.
+- Footer background where appropriate.
+- Important interface elements.
+
+Use gold for:
+
+- Primary buttons.
+- Selected elements.
+- Product highlights.
+- Promotional details.
+- Small accent lines.
+- Hover states.
+- Brand details.
+
+Use light grey for:
+
+- Product card backgrounds where appropriate.
+- Secondary sections.
+- Forms.
+- Subtle separators.
+
+Maintain a consistent colour system.
+
+Do not use gold for small text on white where contrast is insufficient.
+
+Buttons must have clear visual hierarchy.
+
+---
+
+# 6. TYPOGRAPHY
+
+Use Poppins as the primary typeface.
+
+Recommended weights:
+
+- Regular: 400
+- Medium: 500
+- SemiBold: 600
+- Bold: 700
+
+Use Poppins consistently across:
+
+- Navigation.
+- Headings.
+- Product names.
+- Product descriptions.
+- Buttons.
+- Forms.
+- Admin dashboard.
+
+Maintain a clear typography hierarchy.
+
+Ensure the website is readable on mobile devices.
+
+Avoid excessively large headings.
+
+---
+
+# 7. TECHNOLOGY STACK
+
+Use the following technology stack.
+
+Frontend:
+
+- Next.js.
+- React.
+- TypeScript.
+- Tailwind CSS.
+
+Backend:
+
+- Supabase.
+
+Database:
+
+- Supabase PostgreSQL.
+
+Authentication:
+
+- Supabase Auth.
+
+File Storage:
+
+- Supabase Storage.
+
+Source Control:
+
+- GitHub.
+
+Deployment:
+
+- Vercel.
+
+Development:
+
+- Google AI Studio.
+
+Use maintainable, reusable components.
+
+Separate frontend presentation from business logic.
+
+Use server-side operations for sensitive database actions.
+
+Inspect the existing project before changing its structure.
+
+Preserve existing working code where possible.
+
+---
+
+# 8. WEBSITE STRUCTURE
+
+Create the following main navigation.
+
+HOME
+
+SHOP
+
+ABOUT US
+
+CONTACT US
+
+The navigation must be simple and clean.
+
+Do not overcrowd the header.
+
+### Desktop navigation
+
+Display:
+
+- Official logo.
+- Home.
+- Shop.
+- About Us.
+- Contact Us.
+- Search icon.
+- Shopping cart icon.
+- WhatsApp support icon.
+
+### Mobile navigation
+
+Create a responsive mobile menu.
+
+Ensure:
+
+- Menu opens correctly.
+- Menu closes correctly.
+- Links navigate properly.
+- Cart remains accessible.
+- WhatsApp support remains accessible.
+- Navigation does not obstruct content.
+
+Do not display the WhatsApp number.
+
+---
+
+# 9. HOMEPAGE
+
+Create a professional, clean, interactive homepage.
+
+The homepage should immediately communicate the business identity and direct visitors toward shopping.
+
+The layout should prioritize product discovery.
+
+## A. Announcement Bar
+
+Create a small announcement bar at the top.
+
+The administrator must be able to:
+
+- Edit the announcement.
+- Enable or disable it.
+- Change the text.
+- Set a destination link.
+
+Do not hardcode promotional messages.
+
+## B. Header
+
+Create a clean website header.
+
+Include:
+
+- Official logo.
+- Home.
+- Shop.
+- About Us.
+- Contact Us.
+- Search.
+- Cart.
+- WhatsApp icon.
+
+The header must be responsive.
+
+The logo must display clearly.
+
+Do not stretch the logo.
+
+Use the official supplied logo.
+
+## C. Hero Section
+
+Create a unique, modern, premium hero section.
+
+This is one of the most important parts of the website.
+
+The hero section must have:
+
+- Dominant white background.
+- Black typography.
+- Gold accents.
+- High-quality product photography.
+- Clean composition.
+- Strong visual hierarchy.
+- A clear shopping call to action.
+
+### Hero design concept
+
+Create a sophisticated split-layout hero section.
+
+Left side:
+
+- Brand introduction.
+- Headline.
+- Supporting description.
+- Shop Now button.
+- Explore Collections button.
+
+Right side:
+
+- High-quality lifestyle product photography.
+- A clean product arrangement featuring selected items such as handbags, women's hair, watches, or phone accessories.
+
+Use an image that blends naturally into the white background.
+
+The image must feel like professional retail photography.
+
+Do not use abstract artwork.
+
+Do not use cartoon illustrations.
+
+Do not use an unrelated stock image.
+
+Do not generate fake product images that misrepresent the actual inventory.
+
+Where actual product images are unavailable, create an editable hero image placeholder that the administrator can replace.
+
+### Suggested headline
+
+"Discover Your Everyday Essentials."
+
+### Suggested supporting text
+
+"Explore carefully selected hair, fashion handbags, watches, and phone accessories designed to complement your everyday style."
+
+### Primary button
+
+SHOP NOW
+
+### Secondary button
+
+EXPLORE COLLECTIONS
+
+Make the hero section editable through the admin dashboard.
+
+The administrator must be able to:
+
+- Change the headline.
+- Change the description.
+- Upload a hero image.
+- Replace the hero image.
+- Change the primary button text.
+- Change the primary button destination.
+- Change the secondary button.
+- Enable or disable the hero section.
+
+### Hero interaction
+
+Add subtle, professional interaction.
+
+Examples:
+
+- Button hover effect.
+- Subtle image movement.
+- Smooth transition.
+- Clean entrance animation.
+
+Do not use excessive animation.
+
+Ensure the hero loads quickly.
+
+---
+
+# 10. SHOP SECTION
+
+Create a complete product catalogue.
+
+Route:
+
+/shop
+
+The shop must display products from Supabase.
+
+Do not use hardcoded product arrays.
+
+Products must be manageable through the admin dashboard.
+
+### Product categories
+
+Create the following initial categories.
+
+1. Women's Hair.
+2. Women's Fashion Handbags.
+3. Phone Accessories.
+4. Watches.
+
+The categories must be editable.
+
+The administrator must be able to:
+
+- Add categories.
+- Edit categories.
+- Upload category images.
+- Delete or archive categories.
+- Assign products.
+- Change category descriptions.
+
+### Shop page layout
+
+Include:
+
+- Page heading.
+- Product search.
+- Category filters.
+- Product grid.
+- Product sorting.
+- Product availability.
+- Product cards.
+
+### Product cards
+
+Each product card must include:
+
+- Product image.
+- Product name.
+- Price.
+- Sale price where applicable.
+- Availability.
+- View Product.
+- Add to Cart.
+
+Use real uploaded product images.
+
+Do not use artistic product illustrations.
+
+Do not display fake products as actual inventory.
+
+### Product sorting
+
+Support:
+
+- Newest.
+- Price low to high.
+- Price high to low.
+- Name.
+
+### Product filtering
+
+Support:
+
+- Category.
+- Price range.
+- Availability.
+
+Ensure filters work properly on desktop and mobile.
+
+---
+
+# 11. PRODUCT DETAIL PAGE
+
+Create a product detail page.
+
+Route:
+
+/product/[slug]
+
+Each product must have its own valid route.
+
+Display:
+
+- Product name.
+- Product image gallery.
+- Price.
+- Sale price.
+- Product description.
+- Specifications.
+- Stock status.
+- Available variations.
+- Quantity selector.
+- Add to Cart.
+- Buy Now.
+- WhatsApp inquiry.
+
+### Product image gallery
+
+Allow:
+
+- Main image.
+- Additional images.
+- Thumbnail selection.
+- Image switching.
+- Responsive image display.
+
+### Product information
+
+Display only information provided by the administrator.
+
+Do not invent product specifications.
+
+Do not claim products are authentic, certified, or guaranteed unless the business confirms those details.
+
+### WhatsApp inquiry
+
+Add a product inquiry button.
+
+When clicked, open WhatsApp with a prefilled message.
+
+Example:
+
+"Hello JO JO EFFECTS & CO., I am interested in [Product Name]. Please confirm availability and provide more information."
+
+Use the actual product name and price.
+
+Do not display the WhatsApp number.
+
+---
+
+# 12. ABOUT US PAGE
+
+Route:
+
+/about
+
+Create a professional About Us page.
+
+The page should communicate:
+
+- The business background.
+- The owner's interest in sourcing products.
+- The business's product selection.
+- The commitment to customer service.
+- The future vision of the business.
+
+### Suggested introduction
+
+"JO JO EFFECTS & CO. is a growing online retail business focused on bringing together carefully selected everyday products in one convenient shopping destination.
+
+From women's hair and fashion handbags to watches and phone accessories, our goal is to make discovering and shopping for everyday essentials simple and convenient.
+
+We are building a customer-focused online shopping experience that combines product variety, convenient ordering, and personal customer support."
+
+Use this as editable initial content.
+
+Do not invent the owner's biography.
+
+Do not invent the business founding date.
+
+Do not claim the business has physical retail premises unless confirmed.
+
+Allow the administrator to edit the About Us page.
+
+---
+
+# 13. CONTACT US PAGE
+
+Route:
+
+/contact
+
+Create a professional contact page.
+
+Display:
+
+Business Name:
+
+JO JO EFFECTS & CO.
+
+Official Business Contact:
+
++1 (605) 900-8992
+
+WhatsApp:
+
+Provide a functional WhatsApp button without displaying the WhatsApp number.
+
+Contact Form:
+
+- Full name.
+- Email.
+- Phone.
+- Inquiry type.
+- Message.
+
+Inquiry types:
+
+- Product inquiry.
+- Order inquiry.
+- Delivery inquiry.
+- General inquiry.
+
+Save inquiries to Supabase.
+
+Display a confirmation after successful submission.
+
+Include social media links where configured.
+
+Do not invent an email address.
+
+---
+
+# 14. PRODUCT CATEGORIES
+
+Create the following category structure.
+
+## Women's Hair
+
+Allow products such as:
+
+- Wigs.
+- Hair extensions.
+- Braided hair.
+- Bundles.
+- Other hair products.
+
+These are examples of possible products, not confirmed inventory.
+
+The administrator must be able to add actual products.
+
+## Women's Fashion Handbags
+
+Allow products such as:
+
+- Handbags.
+- Shoulder bags.
+- Fashion bags.
+- Other handbag styles.
+
+## Phone Accessories
+
+Allow products such as:
+
+- Phone cases.
+- Chargers.
+- Cables.
+- Screen protectors.
+- Other mobile accessories.
+
+## Watches
+
+Allow products such as:
+
+- Fashion watches.
+- Women's watches.
+- Men's watches.
+- Other watch styles.
+
+The administrator must be able to create new categories.
+
+Do not hardcode category-specific product restrictions.
+
+---
+
+# 15. WHATSAPP INTEGRATION
+
+WhatsApp is an important part of the business's current sales process.
+
+Implement a functional WhatsApp integration.
+
+Official WhatsApp number:
+
++1 (443) 743-5959
+
+Use:
+
+https://wa.me/14437435959
+
+### IMPORTANT
+
+The WhatsApp number must never be displayed as visible text.
+
+Only use it internally to construct WhatsApp links.
+
+### Floating WhatsApp icon
+
+Create a floating WhatsApp icon.
+
+Requirements:
+
+- Appears on all public website pages.
+- Fixed to the lower-right corner.
+- Recognizable WhatsApp icon.
+- Accessible label.
+- Desktop hover tooltip.
+- Mobile-friendly size.
+- Functional link.
+- Does not obstruct shopping cart.
+- Does not obstruct checkout.
+- Does not obstruct mobile navigation.
+
+### Hover behaviour
+
+On desktop, display a small tooltip:
+
+"Chat with us"
+
+Do not display the WhatsApp number.
+
+### WhatsApp general inquiry
+
+Prefilled message:
+
+"Hello JO JO EFFECTS & CO., I would like to make an inquiry about your products. Please assist me. Thank you."
+
+### WhatsApp product inquiry
+
+Prefilled message:
+
+"Hello JO JO EFFECTS & CO., I am interested in [Product Name]. Please confirm availability and provide more information. Thank you."
+
+### WhatsApp order inquiry
+
+Prefilled message:
+
+"Hello JO JO EFFECTS & CO., I have placed an order.
+
+Order Reference: [Order Reference]
+
+Customer: [Customer Name]
+
+Products: [Product Names and Quantities]
+
+Order Total: [USD Amount]
+
+Please confirm my order and provide any necessary delivery updates.
+
+Thank you."
+
+Generate the message from actual order data.
+
+Use proper URL encoding.
+
+Do not hardcode customer information.
+
+Do not claim that a WhatsApp message has been sent.
+
+Opening WhatsApp does not mean the message has been sent.
+
+---
+
+# 16. ORDERING SYSTEM
+
+Create a functional ordering system.
+
+Customers must be able to:
+
+- Browse products.
+- Add products to cart.
+- Select quantities.
+- Select variations.
+- Enter customer details.
+- Enter delivery information.
+- Submit orders.
+- Receive an order reference.
+- Contact the business through WhatsApp.
+
+### Customer information
+
+Collect:
+
+- Full name.
+- Email.
+- Phone number.
+- Delivery address.
+- City.
+- State.
+- Postal code.
+- Country.
+- Delivery instructions.
+
+Use USD as the default currency.
+
+### Order processing
+
+When an order is submitted:
+
+1. Validate customer information.
+2. Validate products.
+3. Validate stock.
+4. Retrieve prices from Supabase.
+5. Calculate the order total.
+6. Generate a unique order reference.
+7. Save the order.
+8. Save order items.
+9. Save customer information.
+10. Record the selected payment method if applicable.
+11. Display the confirmation page.
+12. Provide a WhatsApp order confirmation button.
+
+Do not rely on client-side order totals.
+
+Do not allow customers to manipulate prices.
+
+Do not allow duplicate orders through repeated submissions.
+
+---
+
+# 17. PAYMENT METHODS
+
+The business's official payment methods are:
+
+- Cash App.
+- Venmo.
+- Zelle.
+- PayPal.
+
+Currency:
+
+USD.
+
+Do not implement Paystack.
+
+Do not display Ghanaian cedi.
+
+### Payment configuration
+
+Allow the administrator to configure payment information.
+
+Include:
+
+- Payment method.
+- Payment identifier.
+- Payment link.
+- Payment instructions.
+- Availability.
+- Payment verification status.
+
+Do not invent payment account details.
+
+Only display payment methods that have been configured.
+
+### Payment status
+
+Use:
+
+- Pending.
+- Awaiting verification.
+- Paid.
+- Failed.
+- Refunded.
+
+For Cash App, Venmo, and Zelle, support payment instructions and manual verification unless a supported integration is configured.
+
+For PayPal, implement secure payment integration when the required merchant credentials are available.
+
+Do not mark an order as paid simply because the customer selects a payment method.
+
+Do not claim payment success without verification.
+
+---
+
+# 18. ORDER CONFIRMATION PAGE
+
+Route:
+
+/checkout/success
+
+Display:
+
+- Order reference.
+- Customer name.
+- Products.
+- Quantities.
+- Total.
+- Currency.
+- Payment method.
+- Payment status.
+- Delivery information.
+- WhatsApp support button.
+
+Provide a WhatsApp order confirmation button.
+
+Generate the WhatsApp message from actual order information.
+
+Do not expose sensitive customer information through public order references.
+
+Do not display a false payment success message.
+
+---
+
+# 19. ADMIN DASHBOARD
+
+Create a complete administrative dashboard.
+
+Routes:
+
+/admin/login
+
+/admin/dashboard
+
+/admin/products
+
+/admin/products/new
+
+/admin/categories
+
+/admin/orders
+
+/admin/inquiries
+
+/admin/content
+
+/admin/settings
+
+The dashboard must be protected by Supabase Auth.
+
+Do not create a public administrator registration page.
+
+Do not hardcode administrator passwords.
+
+### Dashboard overview
+
+Display:
+
+- Total products.
+- Total orders.
+- Pending orders.
+- Paid orders.
+- Total sales.
+- Recent orders.
+- Low-stock products.
+- New inquiries.
+
+Use real Supabase data.
+
+Do not use fake statistics.
+
+---
+
+# 20. PRODUCT MANAGEMENT
+
+Allow the administrator to:
+
+- Add products.
+- Edit products.
+- Delete or archive products.
+- Upload product images.
+- Replace product images.
+- Remove product images.
+- Change product names.
+- Edit descriptions.
+- Edit specifications.
+- Edit prices.
+- Edit sale prices.
+- Edit stock.
+- Manage variations.
+- Assign categories.
+- Publish products.
+- Unpublish products.
+- Feature products.
+- Mark new arrivals.
+
+### Image upload
+
+The administrator must be able to upload images directly from:
+
+- Laptop.
+- Desktop.
+- Mobile phone.
+
+Do not require image URLs.
+
+Implement:
+
+- File selection.
+- Image preview.
+- Multiple image uploads.
+- File validation.
+- Upload progress.
+- Supabase Storage.
+- Image ordering.
+- Primary image selection.
+- Image removal.
+
+Do not store image files directly in PostgreSQL.
+
+Store image paths and metadata.
+
+---
+
+# 21. ORDER MANAGEMENT
+
+Allow administrators to:
+
+- View all orders.
+- Search orders.
+- Filter orders.
+- View order details.
+- View customer details.
+- View products.
+- View order total.
+- View payment method.
+- View payment status.
+- Update fulfillment status.
+- Add tracking information.
+- Add internal notes.
+- Export orders.
+
+Order statuses:
+
+- New.
+- Processing.
+- Shipped.
+- Delivered.
+- Cancelled.
+- On hold.
+
+Payment statuses must remain separate from order fulfillment statuses.
+
+Record order status changes.
+
+---
+
+# 22. INQUIRY MANAGEMENT
+
+Save customer inquiries to Supabase.
+
+Allow the administrator to:
+
+- View inquiries.
+- Search inquiries.
+- Filter inquiries.
+- View messages.
+- Update status.
+- Add notes.
+- Associate inquiries with products.
+- Associate inquiries with orders.
+
+Inquiry statuses:
+
+- New.
+- In progress.
+- Responded.
+- Resolved.
+
+Do not claim that WhatsApp messages are automatically recorded.
+
+Only website-submitted inquiries should be recorded unless a real integration is implemented.
+
+---
+
+# 23. COMPANY INFORMATION MANAGEMENT
+
+Allow the administrator to edit:
+
+- Business name.
+- Logo.
+- Business contact number.
+- WhatsApp number.
+- Business location.
+- Business description.
+- About Us content.
+- Homepage headline.
+- Homepage description.
+- Hero image.
+- Promotional banner.
+- Social media URLs.
+- Footer content.
+- Contact information.
+
+Do not require code changes to update ordinary website content.
+
+Keep the WhatsApp number hidden from public text.
+
+---
+
+# 24. SOCIAL MEDIA INTEGRATION
+
+Add social media icons to the footer.
+
+Platforms:
+
+- Facebook.
+- Instagram.
+- TikTok.
+
+Use recognizable platform icons.
+
+Allow the administrator to configure each URL.
+
+If a URL is not configured, hide the corresponding icon.
+
+Do not create fake social media links.
+
+Do not use "#" as a placeholder.
+
+Ensure external links work correctly.
+
+Use appropriate external link security.
+
+---
+
+# 25. DATABASE ARCHITECTURE
+
+Use Supabase PostgreSQL.
+
+Create the following tables:
+
+profiles
+
+products
+
+product_images
+
+categories
+
+product_variants
+
+orders
+
+order_items
+
+payments
+
+inventory_movements
+
+inquiries
+
+site_settings
+
+homepage_sections
+
+order_status_history
+
+admin_activity_logs
+
+### Database requirements
+
+- UUID primary keys.
+- Foreign keys.
+- Unique product slugs.
+- Unique order references.
+- Appropriate indexes.
+- Database constraints.
+- Data validation.
+- Secure access policies.
+- Database migrations.
+
+Preserve historical order information.
+
+Do not modify historical order prices when current product prices change.
+
+Use server-side order calculations.
+
+---
+
+# 26. DATABASE SECURITY
+
+Enable Row Level Security.
+
+Public users may view published products and public categories.
+
+Public users must not access:
+
+- Private customer information.
+- Payment records.
+- Administrative profiles.
+- Private inquiries.
+- Internal notes.
+- Administrative activity logs.
+
+Administrators must authenticate.
+
+Administrative operations must be authorized server-side.
+
+Do not expose the Supabase service-role key in frontend code.
+
+Do not trust client-side administrator roles.
+
+---
+
+# 27. RESPONSIVE DESIGN
+
+The website must work on:
+
+- Desktop.
+- Laptop.
+- Tablet.
+- Mobile.
+
+Mobile design must be intentional.
+
+Ensure:
+
+- Responsive navigation.
+- Readable typography.
+- Proper image sizing.
+- Functional shopping cart.
+- Easy checkout.
+- Accessible buttons.
+- Responsive admin dashboard.
+- WhatsApp icon remains visible without obstructing content.
+
+Avoid horizontal scrolling.
+
+Do not simply shrink the desktop layout.
+
+---
+
+# 28. SEO AND PERFORMANCE
+
+Implement:
+
+- Unique page titles.
+- Meta descriptions.
+- Open Graph metadata.
+- Product metadata.
+- Sitemap.
+- Robots configuration.
+- Image alt text.
+- Canonical URLs.
+- Responsive images.
+- Lazy loading.
+- Efficient database queries.
+- Pagination.
+
+Ensure public product pages can be indexed.
+
+Prevent administrative pages from being indexed.
+
+Optimize for mobile loading.
+
+---
+
+# 29. GITHUB AND VERCEL
+
+Prepare the application for GitHub and Vercel.
+
+Include:
+
+- Complete source code.
+- Database migrations.
+- README.
+- Environment variable documentation.
+- Supabase setup instructions.
+- Administrator setup instructions.
+- Deployment instructions.
+- Payment configuration instructions.
+
+Create a .gitignore file.
+
+Never commit secret keys.
+
+Prepare the application for production deployment.
+
+Do not claim the website is live until deployment has been completed and verified.
+
+---
+
+# 30. TESTING
+
+Test:
+
+- Homepage.
+- Shop.
+- Product categories.
+- Product details.
+- Search.
+- Cart.
+- Checkout.
+- Order creation.
+- Payment status.
+- WhatsApp integration.
+- Contact form.
+- Social media links.
+- Admin login.
+- Product management.
+- Image uploads.
+- Order management.
+- Inquiry management.
+- Website content editing.
+- Mobile responsiveness.
+- Direct route access.
+- Browser refresh.
+- Missing pages.
+- Custom 404.
+
+Fix errors before considering the project complete.
+
+---
+
+# 31. FINAL ACCEPTANCE REQUIREMENTS
+
+The website must:
+
+1. Use the JO JO EFFECTS & CO. brand.
+2. Use a white-dominant design.
+3. Use black and gold accents.
+4. Use Poppins typography.
+5. Display the official logo correctly.
+6. Display the official business contact number.
+7. Never display the WhatsApp number as visible text.
+8. Use the correct WhatsApp number internally.
+9. Include Home.
+10. Include Shop.
+11. Include About Us.
+12. Include Contact Us.
+13. Include Facebook.
+14. Include Instagram.
+15. Include TikTok.
+16. Include the four product categories.
+17. Retrieve products from Supabase.
+18. Support product image uploads.
+19. Support product editing.
+20. Support product categories.
+21. Support cart functionality.
+22. Support order creation.
+23. Support payment method configuration.
+24. Support order management.
+25. Support inquiry recording.
+26. Include a secure admin dashboard.
+27. Include functional WhatsApp links.
+28. Include responsive layouts.
+29. Include working routes.
+30. Include a custom 404 page.
+31. Include database security.
+32. Include GitHub documentation.
+33. Include Vercel deployment preparation.
+
+---
+
+# 32. FINAL INSTRUCTION
+
+Build JO JO EFFECTS & CO. as a real, functional, professional online store.
+
+The website must be clean, simple, modern, premium, and easy to manage.
+
+Use white as the dominant colour.
+
+Use black and gold as complementary accents.
+
+Create a unique, professional hero section with real product photography or editable image placeholders.
+
+Use the official business contact number:
+
++1 (605) 900-8992
+
+Use the official WhatsApp number internally:
+
++1 (443) 743-5959
+
+**Never display the WhatsApp number as visible website text.**
+
+Build the following main pages:
+
+Home
+
+Shop
+
+About Us
+
+Contact Us
+
+Include product categories:
+
+Women's Hair
+
+Women's Fashion Handbags
+
+Phone Accessories
+
+Watches
+
+Include social media icons:
+
+Facebook
+
+Instagram
+
+TikTok
+
+Include a floating WhatsApp support icon.
+
+Include a secure administrative dashboard.
+
+Use Supabase for the database, authentication, and file storage.
+
+Use GitHub for source control.
+
+Prepare the application for Vercel deployment.
+
+Do not create a static mockup.
+
+Do not create fake product records.
+
+Do not create nonfunctional buttons.
+
+Do not hardcode ordinary website content.
+
+Do not expose secret keys.
+
+Do not invent business information.
+
+Do not claim a payment or order has been completed without actual confirmation.
+
+Build the complete application, test its functionality, resolve errors, and prepare it for deployment.
+
+The final result must establish JO JO EFFECTS & CO. as a professional online retail brand and provide a reliable foundation for the business to grow beyond Facebook-based selling.

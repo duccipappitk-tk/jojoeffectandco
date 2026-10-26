@@ -1,0 +1,7 @@
+{
+  "name": "JO JO EFFECTS & CO. - Online Store",
+  "description": "Your Everyday Finds, Made Easy. Explore premium hair, fashion handbags, watches, and phone accessories with direct WhatsApp ordering and admin dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
