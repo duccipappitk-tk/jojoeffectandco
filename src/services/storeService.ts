@@ -18,6 +18,29 @@ const STORAGE_KEYS = {
   SETTINGS: 'jojo_settings_v1',
 };
 
+const safeStorage = {
+  getItem: (key: string): string | null => {
+    if (typeof window === 'undefined') return null;
+    try {
+      return localStorage.getItem(key);
+    } catch (_) {
+      return null;
+    }
+  },
+  setItem: (key: string, value: string): void => {
+    if (typeof window === 'undefined') return;
+    try {
+      localStorage.setItem(key, value);
+    } catch (_) {}
+  },
+  removeItem: (key: string): void => {
+    if (typeof window === 'undefined') return;
+    try {
+      localStorage.removeItem(key);
+    } catch (_) {}
+  },
+};
+
 /**
  * Normalizes any image URL so it resolves correctly in production on Vercel
  * without 404ing on Vite source paths.
@@ -434,7 +457,7 @@ export const storeService = {
   // SETTINGS
   getSettings(): SiteSettings {
     try {
-      const data = localStorage.getItem(STORAGE_KEYS.SETTINGS);
+      const data = safeStorage.getItem(STORAGE_KEYS.SETTINGS);
       if (data) {
         const parsed = JSON.parse(data);
         if (parsed.hero_section?.image_url) {
@@ -446,7 +469,7 @@ export const storeService = {
             ...parsed.social_links,
             instagram: 'https://www.instagram.com/easicartmarket?xtok=cTZzc3B5MTFxcDV0',
           };
-          localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(parsed));
+          safeStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(parsed));
         }
         return { ...INITIAL_SETTINGS, ...parsed };
       }
@@ -457,7 +480,7 @@ export const storeService = {
   },
 
   async saveSettings(settings: SiteSettings): Promise<SiteSettings> {
-    localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
+    safeStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
     if (isSupabaseConfigured && supabase) {
       try {
         await supabase
@@ -479,6 +502,14 @@ export const storeService = {
       }));
     };
 
+    let localCategories: Category[] = [];
+    try {
+      const stored = safeStorage.getItem(STORAGE_KEYS.CATEGORIES);
+      if (stored) {
+        localCategories = sanitizeCategories(JSON.parse(stored) as Category[]);
+      }
+    } catch (_) {}
+
     if (isSupabaseConfigured && supabase) {
       try {
         const { data, error } = await supabase
@@ -486,7 +517,16 @@ export const storeService = {
           .select('*')
           .order('display_order', { ascending: true });
         if (!error && data && data.length > 0) {
-          return sanitizeCategories(data as Category[]);
+          const supabaseCats = sanitizeCategories(data as Category[]);
+          const supabaseIdSet = new Set(supabaseCats.map(c => c.id));
+          const localOnly = localCategories.filter(c => !supabaseIdSet.has(c.id));
+          if (localOnly.length > 0) {
+            const combined = [...supabaseCats, ...localOnly];
+            safeStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(combined));
+            return combined;
+          }
+          safeStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(supabaseCats));
+          return supabaseCats;
         }
         // If table exists but empty, auto-seed initial categories into Supabase
         if (!error && (!data || data.length === 0)) {
@@ -499,24 +539,16 @@ export const storeService = {
         console.warn('Supabase getCategories error:', err);
       }
     }
-    try {
-      const stored = localStorage.getItem(STORAGE_KEYS.CATEGORIES);
-      if (stored) {
-        const parsed = JSON.parse(stored) as Category[];
-        const sanitized = sanitizeCategories(parsed);
-        if (JSON.stringify(sanitized) !== stored) {
-          localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(sanitized));
-        }
-        return sanitized;
-      }
-    } catch (e) {
-      console.warn('Storage read error', e);
+
+    if (localCategories.length > 0) {
+      return localCategories;
     }
-    localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(INITIAL_CATEGORIES));
+
+    safeStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(INITIAL_CATEGORIES));
     return INITIAL_CATEGORIES;
   },
 
-  async saveCategory(category: Category): Promise<Category> {
+  async saveCategory(category: Category): Promise<{ category: Category; supabaseSyncError?: string }> {
     const list = await this.getCategories();
     const existingIndex = list.findIndex(c => c.id === category.id);
     let updated: Category[];
@@ -526,28 +558,45 @@ export const storeService = {
     } else {
       updated = [...list, category];
     }
-    localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(updated));
+    safeStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(updated));
 
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('jojo_store_updated', { detail: { type: 'category', id: category.id } }));
+    }
+
+    let supabaseSyncError: string | undefined = undefined;
     if (isSupabaseConfigured && supabase) {
       try {
-        await supabase.from('categories').upsert(category);
-      } catch (e) {
-        console.warn('Supabase upsert category error', e);
+        const { error } = await supabase.from('categories').upsert(category);
+        if (error) {
+          console.warn('Supabase upsert category error:', error);
+          supabaseSyncError = error.message;
+        }
+      } catch (e: any) {
+        console.warn('Supabase upsert category exception:', e);
+        supabaseSyncError = e?.message;
       }
     }
-    return category;
+    return { category, supabaseSyncError };
   },
 
   async deleteCategory(id: string): Promise<void> {
     const list = await this.getCategories();
     const updated = list.filter(c => c.id !== id);
-    localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(updated));
+    safeStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(updated));
+
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('jojo_store_updated', { detail: { type: 'category_deleted', id } }));
+    }
 
     if (isSupabaseConfigured && supabase) {
       try {
-        await supabase.from('categories').delete().eq('id', id);
+        const { error } = await supabase.from('categories').delete().eq('id', id);
+        if (error) {
+          console.warn('Supabase delete category error:', error);
+        }
       } catch (e) {
-        console.warn('Supabase delete category error', e);
+        console.warn('Supabase delete category exception:', e);
       }
     }
   },
@@ -563,15 +612,36 @@ export const storeService = {
       }));
     };
 
+    let localProducts: Product[] = [];
+    try {
+      const stored = safeStorage.getItem(STORAGE_KEYS.PRODUCTS);
+      if (stored) {
+        localProducts = sanitizeProducts(JSON.parse(stored) as Product[]);
+      }
+    } catch (_) {}
+
     if (isSupabaseConfigured && supabase) {
       try {
         const { data, error } = await supabase
           .from('products')
           .select('*')
           .order('created_at', { ascending: false });
+
         if (!error && data && data.length > 0) {
-          return sanitizeProducts(data as Product[]);
+          const supabaseProducts = sanitizeProducts(data as Product[]);
+          const supabaseIdSet = new Set(supabaseProducts.map(p => p.id));
+          const localOnly = localProducts.filter(lp => !supabaseIdSet.has(lp.id));
+
+          if (localOnly.length > 0) {
+            const combined = [...localOnly, ...supabaseProducts];
+            safeStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(combined));
+            return combined;
+          }
+
+          safeStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(supabaseProducts));
+          return supabaseProducts;
         }
+
         // If table exists but empty, auto-seed initial products into Supabase
         if (!error && (!data || data.length === 0)) {
           for (const prod of INITIAL_PRODUCTS) {
@@ -583,20 +653,12 @@ export const storeService = {
         console.warn('Supabase getProducts error:', err);
       }
     }
-    try {
-      const stored = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
-      if (stored) {
-        const parsed = JSON.parse(stored) as Product[];
-        const sanitized = sanitizeProducts(parsed);
-        if (JSON.stringify(sanitized) !== stored) {
-          localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(sanitized));
-        }
-        return sanitized;
-      }
-    } catch (e) {
-      console.warn('Storage read error', e);
+
+    if (localProducts.length > 0) {
+      return localProducts;
     }
-    localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(INITIAL_PRODUCTS));
+
+    safeStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(INITIAL_PRODUCTS));
     return INITIAL_PRODUCTS;
   },
 
@@ -605,7 +667,7 @@ export const storeService = {
     return products.find(p => p.slug === slug) || null;
   },
 
-  async saveProduct(product: Product): Promise<Product> {
+  async saveProduct(product: Product): Promise<{ product: Product; supabaseSyncError?: string }> {
     const list = await this.getProducts();
     const existingIndex = list.findIndex(p => p.id === product.id);
     let updated: Product[];
@@ -615,28 +677,52 @@ export const storeService = {
     } else {
       updated = [{ ...product, created_at: new Date().toISOString(), updated_at: new Date().toISOString() }, ...list];
     }
-    localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
+    safeStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
+
+    // Dispatch custom event to notify App.tsx and live storefront components to refresh
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('jojo_store_updated', { detail: { type: 'product', id: product.id } }));
+    }
+
+    let supabaseSyncError: string | undefined = undefined;
 
     if (isSupabaseConfigured && supabase) {
       try {
-        await supabase.from('products').upsert(product);
-      } catch (e) {
-        console.warn('Supabase upsert product error', e);
+        const { error } = await supabase.from('products').upsert(product);
+        if (error) {
+          console.error('Supabase upsert product error:', error);
+          if (error.code === '42501') {
+            supabaseSyncError = 'Supabase Row-Level Security policy (RLS 42501) prevented cloud storage. Product is saved locally on this browser. Run the provided fix SQL in your Supabase SQL Editor to sync to all devices.';
+          } else {
+            supabaseSyncError = `Supabase sync error (${error.code || 'database'}): ${error.message}`;
+          }
+        }
+      } catch (err: any) {
+        console.error('Supabase upsert exception:', err);
+        supabaseSyncError = err?.message || 'Network error while syncing to Supabase';
       }
     }
-    return product;
+
+    return { product, supabaseSyncError };
   },
 
   async deleteProduct(id: string): Promise<void> {
     const list = await this.getProducts();
     const updated = list.filter(p => p.id !== id);
-    localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
+    safeStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(updated));
+
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('jojo_store_updated', { detail: { type: 'product_deleted', id } }));
+    }
 
     if (isSupabaseConfigured && supabase) {
       try {
-        await supabase.from('products').delete().eq('id', id);
+        const { error } = await supabase.from('products').delete().eq('id', id);
+        if (error) {
+          console.warn('Supabase delete product error:', error);
+        }
       } catch (e) {
-        console.warn('Supabase delete product error', e);
+        console.warn('Supabase delete product exception:', e);
       }
     }
   },
@@ -657,7 +743,7 @@ export const storeService = {
       }
     }
     try {
-      const stored = localStorage.getItem(STORAGE_KEYS.ORDERS);
+      const stored = safeStorage.getItem(STORAGE_KEYS.ORDERS);
       if (stored) {
         return JSON.parse(stored);
       }
@@ -686,7 +772,7 @@ export const storeService = {
 
     const currentOrders = await this.getOrders();
     const updated = [newOrder, ...currentOrders];
-    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(updated));
+    safeStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(updated));
 
     // Update stock quantity for ordered products
     try {
@@ -697,7 +783,7 @@ export const storeService = {
           products[pIndex].stock_quantity = Math.max(0, products[pIndex].stock_quantity - item.quantity);
         }
       }
-      localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
+      safeStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
     } catch (e) {
       console.warn('Stock update error', e);
     }
@@ -723,7 +809,7 @@ export const storeService = {
     if (notes) {
       orders[index].internal_notes = (orders[index].internal_notes ? orders[index].internal_notes + '\n' : '') + `[${new Date().toLocaleDateString()}] ${notes}`;
     }
-    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
+    safeStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
 
     if (isSupabaseConfigured && supabase) {
       try {
@@ -742,7 +828,7 @@ export const storeService = {
 
     orders[index].payment_status = paymentStatus;
     orders[index].updated_at = new Date().toISOString();
-    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
+    safeStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
 
     if (isSupabaseConfigured && supabase) {
       try {
@@ -763,7 +849,7 @@ export const storeService = {
     orders[index].carrier = carrier;
     orders[index].order_status = 'shipped';
     orders[index].updated_at = new Date().toISOString();
-    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
+    safeStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
 
     if (isSupabaseConfigured && supabase) {
       try {
@@ -791,7 +877,7 @@ export const storeService = {
       }
     }
     try {
-      const stored = localStorage.getItem(STORAGE_KEYS.INQUIRIES);
+      const stored = safeStorage.getItem(STORAGE_KEYS.INQUIRIES);
       if (stored) {
         return JSON.parse(stored);
       }
@@ -811,7 +897,7 @@ export const storeService = {
 
     const current = await this.getInquiries();
     const updated = [newInquiry, ...current];
-    localStorage.setItem(STORAGE_KEYS.INQUIRIES, JSON.stringify(updated));
+    safeStorage.setItem(STORAGE_KEYS.INQUIRIES, JSON.stringify(updated));
 
     if (isSupabaseConfigured && supabase) {
       try {
@@ -832,7 +918,7 @@ export const storeService = {
     if (adminNotes !== undefined) {
       list[index].admin_notes = adminNotes;
     }
-    localStorage.setItem(STORAGE_KEYS.INQUIRIES, JSON.stringify(list));
+    safeStorage.setItem(STORAGE_KEYS.INQUIRIES, JSON.stringify(list));
 
     if (isSupabaseConfigured && supabase) {
       try {

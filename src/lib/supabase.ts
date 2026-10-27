@@ -15,8 +15,8 @@ export function normalizeSupabaseUrl(url: string): string {
 }
 
 // Read from localStorage override, Vite env variables, or default user credentials
-const envUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const envAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const envUrl = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SUPABASE_URL) || '';
+const envAnonKey = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SUPABASE_ANON_KEY) || '';
 
 const localUrl = typeof window !== 'undefined' ? localStorage.getItem('jojo_supabase_url') || '' : '';
 const localKey = typeof window !== 'undefined' ? localStorage.getItem('jojo_supabase_anon_key') || '' : '';

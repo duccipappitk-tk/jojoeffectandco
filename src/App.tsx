@@ -76,6 +76,12 @@ function AppContent() {
 
   useEffect(() => {
     loadData();
+
+    const handleStoreUpdated = () => {
+      loadData();
+    };
+    window.addEventListener('jojo_store_updated', handleStoreUpdated);
+    return () => window.removeEventListener('jojo_store_updated', handleStoreUpdated);
   }, []);
 
   const navigate = (route: string) => {
@@ -83,6 +89,9 @@ function AppContent() {
       window.scrollTo(0, 0);
     } catch (_) {}
     setCurrentRoute(route);
+    if (!route.startsWith('/admin')) {
+      loadData();
+    }
     try {
       window.history.pushState(null, '', route);
     } catch (_) {

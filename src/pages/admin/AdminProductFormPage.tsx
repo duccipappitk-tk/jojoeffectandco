@@ -214,8 +214,16 @@ export const AdminProductFormPage: React.FC<AdminProductFormPageProps> = ({
         updated_at: new Date().toISOString(),
       };
 
-      await storeService.saveProduct(productPayload);
-      onNavigateAdmin('/admin/products');
+      const result = await storeService.saveProduct(productPayload);
+      if (result.supabaseSyncError) {
+        setErrorMsg(`Product saved to store! Warning: ${result.supabaseSyncError}`);
+        setSaving(false);
+        setTimeout(() => {
+          onNavigateAdmin('/admin/products');
+        }, 3500);
+      } else {
+        onNavigateAdmin('/admin/products');
+      }
     } catch (err: any) {
       setErrorMsg('Failed to save product: ' + (err.message || 'Unknown error'));
       setSaving(false);
