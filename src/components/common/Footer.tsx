@@ -239,8 +239,24 @@ export const Footer: React.FC<FooterProps> = ({ settings, onNavigate }) => {
 
         {/* Accepted Payment Methods & Copyright */}
         <div className="pt-12 mt-12 border-t border-[#222222] flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-neutral-500">
-          <div className="text-center md:text-left">
-            &copy; {new Date().getFullYear()} JO JO EFFECTS &amp; CO. All rights reserved.
+          {/* Copyright & Admin Shield Icon */}
+          <div className="flex items-center justify-center md:justify-start gap-2 text-center md:text-left">
+            <span>&copy; {new Date().getFullYear()} JO JO EFFECTS &amp; CO. All rights reserved.</span>
+            
+            {/* Active Admin Dashboard Shield Icon */}
+            <a
+              href="/admin/login"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate('/admin/login');
+              }}
+              className="text-neutral-400 hover:text-[#D4AF62] active:text-[#D4AF62] active:scale-90 transition-all p-1 rounded-sm cursor-pointer inline-flex items-center justify-center hover:bg-neutral-800/80 focus:outline-none focus:ring-1 focus:ring-[#D4AF62]"
+              aria-label="Administrator login"
+              title="Administrator login"
+            >
+              <ShieldCheck className="w-4 h-4 text-neutral-400 hover:text-[#D4AF62] transition-colors" aria-hidden="true" />
+              <span className="sr-only">Administrator login</span>
+            </a>
           </div>
 
           {/* Supported USD Payments Section */}
@@ -255,21 +271,6 @@ export const Footer: React.FC<FooterProps> = ({ settings, onNavigate }) => {
               {enabledPaymentMethods.map(method => (
                 <PaymentMethodBadge key={method} method={method} />
               ))}
-
-              {/* Discreet Administrator Login Link */}
-              <a
-                href="/admin/login"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('/admin/login');
-                }}
-                className="opacity-30 hover:opacity-90 focus:opacity-100 transition-opacity p-1.5 text-neutral-500 hover:text-[#D4AF62] focus:text-[#D4AF62] focus:outline-none focus:ring-1 focus:ring-[#D4AF62]/50 rounded cursor-pointer ml-1 inline-flex items-center justify-center select-none"
-                aria-label="Administrator login"
-                title="Administrator login"
-              >
-                <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
-                <span className="sr-only">Administrator login</span>
-              </a>
             </div>
           </div>
         </div>

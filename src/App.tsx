@@ -80,7 +80,7 @@ function AppContent() {
 
   const navigate = (route: string) => {
     try {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo(0, 0);
     } catch (_) {}
     setCurrentRoute(route);
     try {

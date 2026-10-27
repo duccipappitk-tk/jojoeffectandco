@@ -23,7 +23,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // 1. Check if Supabase session exists
       if (isSupabaseConfigured && supabase) {
         try {
-          const { data: { session } } = await supabase.auth.getSession();
+          const sessionPromise = supabase.auth.getSession();
+          const timeoutPromise = new Promise<{ data: { session: null } }>((resolve) =>
+            setTimeout(() => resolve({ data: { session: null } }), 1000)
+          );
+          const { data: { session } } = await Promise.race([sessionPromise, timeoutPromise]);
           if (session?.user) {
             setAdminUser({
               id: session.user.id,
