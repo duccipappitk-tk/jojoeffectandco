@@ -18,23 +18,12 @@ import { PaymentMethodBadge } from './PaymentIcons';
 interface FooterProps {
   settings: SiteSettings;
   onNavigate: (route: string) => void;
-  onOpenAdmin?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ settings, onNavigate, onOpenAdmin }) => {
+export const Footer: React.FC<FooterProps> = ({ settings, onNavigate }) => {
   const handleWhatsApp = () => {
     const link = storeService.getWhatsAppGeneralLink();
     window.open(link, '_blank', 'noopener,noreferrer');
-  };
-
-  const handleAdminClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (onOpenAdmin) {
-      onOpenAdmin();
-    } else {
-      onNavigate('/admin/dashboard');
-    }
   };
 
   const hasFacebook = Boolean(settings.social_links?.facebook);
@@ -267,16 +256,20 @@ export const Footer: React.FC<FooterProps> = ({ settings, onNavigate, onOpenAdmi
                 <PaymentMethodBadge key={method} method={method} />
               ))}
 
-              {/* Admin Dashboard Shield Icon */}
-              <button
-                type="button"
-                onClick={handleAdminClick}
-                className="inline-flex items-center justify-center h-8 w-8 sm:w-9 bg-[#1e1e1e] hover:bg-[#282828] text-[#D4AF62] hover:text-[#f3cc7c] border border-[#3a3a3a] hover:border-[#D4AF62] rounded-md transition-all cursor-pointer shadow-xs focus:outline-none focus:ring-2 focus:ring-[#D4AF62]/50 group ml-1"
-                aria-label="Admin Dashboard Access"
-                title="Admin Dashboard Portal"
+              {/* Discreet Administrator Login Link */}
+              <a
+                href="/admin/login"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('/admin/login');
+                }}
+                className="opacity-30 hover:opacity-90 focus:opacity-100 transition-opacity p-1.5 text-neutral-500 hover:text-[#D4AF62] focus:text-[#D4AF62] focus:outline-none focus:ring-1 focus:ring-[#D4AF62]/50 rounded cursor-pointer ml-1 inline-flex items-center justify-center select-none"
+                aria-label="Administrator login"
+                title="Administrator login"
               >
-                <ShieldCheck className="w-4 h-4 text-[#D4AF62] group-hover:scale-110 transition-transform" />
-              </button>
+                <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
+                <span className="sr-only">Administrator login</span>
+              </a>
             </div>
           </div>
         </div>

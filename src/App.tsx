@@ -25,7 +25,6 @@ import { NotFoundPage } from './pages/NotFoundPage';
 // Admin Pages
 import { AdminLayout } from './pages/admin/AdminLayout';
 import { AdminLoginPage } from './pages/admin/AdminLoginPage';
-import { AdminLoginModal } from './components/admin/AdminLoginModal';
 import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
 import { AdminProductsPage } from './pages/admin/AdminProductsPage';
 import { AdminProductFormPage } from './pages/admin/AdminProductFormPage';
@@ -47,7 +46,6 @@ function AppContent() {
   const [products, setProducts] = useState<Product[]>([]);
   const [settings, setSettings] = useState<SiteSettings>(storeService.getSettings());
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isAdminLoginModalOpen, setIsAdminLoginModalOpen] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
 
   // Sync with browser history and popstate
@@ -92,14 +90,6 @@ function AppContent() {
     }
   };
 
-  const handleOpenAdminFromFooter = () => {
-    if (isAuthenticated) {
-      navigate('/admin/dashboard');
-    } else {
-      setIsAdminLoginModalOpen(true);
-    }
-  };
-
   // Extract Path & Query
   const [rawPath, rawSearch] = currentRoute.split('?');
   const queryParams = new URLSearchParams(rawSearch || '');
@@ -132,7 +122,7 @@ function AppContent() {
         onNavigateAdmin={navigate}
         onNavigatePublic={navigate}
       >
-        {rawPath === '/admin' || rawPath === '/admin/dashboard' ? (
+        {rawPath === '/admin' || rawPath === '/admin/dashboard' || rawPath === '/admin/login' ? (
           <AdminDashboardPage onNavigateAdmin={navigate} />
         ) : rawPath === '/admin/products' ? (
           <AdminProductsPage onNavigateAdmin={navigate} onNavigatePublic={navigate} />
@@ -240,7 +230,6 @@ function AppContent() {
       <Footer
         settings={settings}
         onNavigate={navigate}
-        onOpenAdmin={handleOpenAdminFromFooter}
       />
 
       {/* 5. Floating WhatsApp Support Button (Never displays phone number) */}
@@ -256,16 +245,6 @@ function AppContent() {
         products={products}
         categories={categories}
         onNavigate={navigate}
-      />
-
-      {/* 8. Admin Login Pop-up Modal (Zero pre-filled credentials, discreetly opened via shield icon) */}
-      <AdminLoginModal
-        isOpen={isAdminLoginModalOpen}
-        onClose={() => setIsAdminLoginModalOpen(false)}
-        onSuccess={() => {
-          setIsAdminLoginModalOpen(false);
-          navigate('/admin/dashboard');
-        }}
       />
 
     </div>
