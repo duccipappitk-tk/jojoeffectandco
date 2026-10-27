@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Order } from '../types';
 import { storeService } from '../services/storeService';
+import { PaymentMethodIcon, PAYMENT_METHOD_NAMES } from '../components/common/PaymentIcons';
 
 interface CheckoutSuccessPageProps {
   orderReference?: string;
@@ -161,9 +162,15 @@ export const CheckoutSuccessPage: React.FC<CheckoutSuccessPageProps> = ({
                   <Clock className="w-3.5 h-3.5" />
                   <span>Awaiting Verification</span>
                 </span>
-                <span className="text-[11px] text-neutral-400 block mt-1.5">
-                  Method: {order.payment_method.toUpperCase()}
-                </span>
+                <div className="flex items-center gap-2 mt-2 pt-2 border-t border-neutral-100">
+                  <span className="text-[11px] text-neutral-400">Method:</span>
+                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-neutral-50 border border-neutral-200 rounded text-xs font-semibold text-[#111111]">
+                    <div className="w-5 h-4 bg-white rounded flex items-center justify-center p-0.5 border border-neutral-200 shadow-2xs">
+                      <PaymentMethodIcon method={order.payment_method} className="h-3.5 w-auto max-w-[16px]" />
+                    </div>
+                    <span>{PAYMENT_METHOD_NAMES[order.payment_method] || order.payment_method.toUpperCase()}</span>
+                  </div>
+                </div>
               </div>
 
               <div className="p-4 bg-white rounded-lg border border-neutral-200">
