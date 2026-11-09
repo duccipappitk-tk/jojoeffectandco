@@ -97,7 +97,7 @@ app.post('/api/ai/analyze-products', async (req, res) => {
   if (!apiKey) {
     console.error('[Server API] GEMINI_API_KEY is not configured in process.env');
     return res.status(500).json({
-      error: 'GEMINI_API_KEY is not configured on the server. Please add GEMINI_API_KEY to your environment or secrets panel.'
+      error: 'GEMINI_API_KEY is not configured on the server. Please ensure GEMINI_API_KEY is configured in your environment settings.'
     });
   }
 

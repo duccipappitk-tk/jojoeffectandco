@@ -82,10 +82,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // 2. Validate Server-Side Gemini API Key
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
   if (!apiKey) {
     return res.status(500).json({ 
-      error: 'GEMINI_API_KEY is not configured on the server. Please configure it in your Vercel or environment settings.' 
+      error: 'GEMINI_API_KEY is not configured on the server. Please configure GEMINI_API_KEY in your Vercel Project Settings > Environment Variables.' 
     });
   }
 
