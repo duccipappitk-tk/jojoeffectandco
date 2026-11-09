@@ -931,16 +931,20 @@ export const storeService = {
   },
 
   // FILE UPLOAD (Converts local file to Data URL or uploads to Supabase Storage if bucket exists)
-  async uploadImage(file: File): Promise<string> {
+  async uploadImage(file: File | Blob, customFilename?: string): Promise<string> {
+    const rawName = (file instanceof File ? file.name : customFilename) || `photo-${Date.now()}.jpg`;
     if (isSupabaseConfigured && supabase) {
       try {
-        const fileExt = file.name.split('.').pop();
+        const fileExt = rawName.split('.').pop() || 'jpg';
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
         const filePath = `products/${fileName}`;
 
         const { error: uploadError } = await supabase.storage
           .from('product-images')
-          .upload(filePath, file);
+          .upload(filePath, file, {
+            contentType: file.type || 'image/jpeg',
+            upsert: true,
+          });
 
         if (!uploadError) {
           const { data } = supabase.storage.from('product-images').getPublicUrl(filePath);

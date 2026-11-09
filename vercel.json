@@ -2,7 +2,7 @@
   "framework": "vite",
   "rewrites": [
     {
-      "source": "/((?!assets/|images/|.*\\..*).*)",
+      "source": "/((?!api/|assets/|images/|.*\\..*).*)",
       "destination": "/index.html"
     }
   ],

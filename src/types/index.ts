@@ -36,6 +36,7 @@ export interface Product {
   base_price: number;
   sale_price?: number | null;
   stock_quantity: number;
+  sku?: string;
   is_published: boolean;
   is_featured: boolean;
   is_new_arrival: boolean;

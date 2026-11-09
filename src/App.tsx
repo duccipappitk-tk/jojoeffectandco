@@ -28,6 +28,7 @@ import { AdminLoginPage } from './pages/admin/AdminLoginPage';
 import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
 import { AdminProductsPage } from './pages/admin/AdminProductsPage';
 import { AdminProductFormPage } from './pages/admin/AdminProductFormPage';
+import { AdminBulkUploadPage } from './pages/admin/AdminBulkUploadPage';
 import { AdminCategoriesPage } from './pages/admin/AdminCategoriesPage';
 import { AdminOrdersPage } from './pages/admin/AdminOrdersPage';
 import { AdminInquiriesPage } from './pages/admin/AdminInquiriesPage';
@@ -137,6 +138,8 @@ function AppContent() {
           <AdminProductsPage onNavigateAdmin={navigate} onNavigatePublic={navigate} />
         ) : rawPath === '/admin/products/new' ? (
           <AdminProductFormPage onNavigateAdmin={navigate} />
+        ) : rawPath === '/admin/products/bulk' ? (
+          <AdminBulkUploadPage onNavigateAdmin={navigate} onNavigatePublic={navigate} />
         ) : rawPath.startsWith('/admin/products/edit/') ? (
           <AdminProductFormPage
             productId={rawPath.replace('/admin/products/edit/', '')}

@@ -12,7 +12,8 @@ import {
   Menu,
   X,
   Database,
-  ShieldCheck
+  ShieldCheck,
+  Sparkles
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { isSupabaseConfigured } from '../../lib/supabase';
@@ -36,6 +37,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   const navItems = [
     { label: 'Overview', route: '/admin/dashboard', icon: LayoutDashboard },
     { label: 'Products', route: '/admin/products', icon: Package },
+    { label: 'AI Bulk Import', route: '/admin/products/bulk', icon: Sparkles },
     { label: 'Categories', route: '/admin/categories', icon: Layers },
     { label: 'Orders', route: '/admin/orders', icon: ShoppingBag },
     { label: 'Inquiries', route: '/admin/inquiries', icon: MessageSquare },
@@ -93,8 +95,11 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         <nav className="flex-1 p-3 space-y-1">
           {navItems.map(item => {
             const Icon = item.icon;
-            const isActive = currentAdminRoute === item.route || 
-              (item.route === '/admin/products' && currentAdminRoute.startsWith('/admin/products'));
+            const isActive = item.route === '/admin/products/bulk'
+              ? currentAdminRoute === '/admin/products/bulk'
+              : item.route === '/admin/products'
+              ? (currentAdminRoute === '/admin/products' || currentAdminRoute.startsWith('/admin/products/new') || currentAdminRoute.startsWith('/admin/products/edit/'))
+              : currentAdminRoute === item.route;
             return (
               <button
                 key={item.route}

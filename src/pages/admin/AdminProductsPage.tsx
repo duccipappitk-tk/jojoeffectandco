@@ -9,7 +9,8 @@ import {
   EyeOff, 
   Sparkles,
   ExternalLink,
-  AlertCircle
+  AlertCircle,
+  Upload
 } from 'lucide-react';
 import { Product, Category } from '../../types';
 import { storeService, resolveImageUrl } from '../../services/storeService';
@@ -83,13 +84,23 @@ export const AdminProductsPage: React.FC<AdminProductsPageProps> = ({
           </h1>
         </div>
 
-        <button
-          onClick={() => onNavigateAdmin('/admin/products/new')}
-          className="px-4 py-2.5 bg-[#111111] hover:bg-[#222222] text-[#D4AF62] rounded-md text-xs font-bold uppercase tracking-wider transition-colors inline-flex items-center gap-2 shadow-sm cursor-pointer"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add New Product</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => onNavigateAdmin('/admin/products/bulk')}
+            className="px-4 py-2.5 bg-white border border-neutral-300 hover:border-[#111111] text-[#111111] rounded-md text-xs font-bold uppercase tracking-wider transition-colors inline-flex items-center gap-2 shadow-2xs cursor-pointer"
+          >
+            <Upload className="w-4 h-4 text-[#D4AF62]" />
+            <span>Bulk Import</span>
+          </button>
+
+          <button
+            onClick={() => onNavigateAdmin('/admin/products/new')}
+            className="px-4 py-2.5 bg-[#111111] hover:bg-[#222222] text-[#D4AF62] rounded-md text-xs font-bold uppercase tracking-wider transition-colors inline-flex items-center gap-2 shadow-sm cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add New Product</span>
+          </button>
+        </div>
       </div>
 
       {/* Filter and Search Bar */}
