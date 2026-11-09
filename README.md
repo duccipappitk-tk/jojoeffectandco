@@ -124,6 +124,7 @@ The application is fully functional out of the box with persistent local state. 
 4. In the **Environment Variables** section, add:
    - `VITE_SUPABASE_URL`: Your Supabase URL
    - `VITE_SUPABASE_ANON_KEY`: Your Supabase Anon Key
+   - `GEMINI_API_KEY`: Your Google Gemini API Key from [aistudio.google.com/apikey](https://aistudio.google.com/apikey) (required for the serverless AI Image-to-Product bulk upload feature)
 5. Click **Deploy**. Vercel will build and deploy your store with global CDN caching.
 
 ---
